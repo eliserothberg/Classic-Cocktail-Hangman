@@ -11,7 +11,7 @@
  <!--  <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
 
    <!--link to JavaScript-->
-    <script type="text/javascript" src="gameStyle.js"></script>
+    <script type="text/javascript" src="assets/javascript/game.js"></script>
 
   <link href='https://fonts.googleapis.com/css?family=Limelight' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Asset' rel='stylesheet' type='text/css'>
@@ -29,7 +29,7 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <div class="nav navbar-nav navbar-right">
-                  <a href= "tryingAgainAgian.html">Reset Game and Stats</a> 
+                  <a href= "index.html">Reset Game and Stats</a> 
                 </div>
             </div>
             <!-- /.navbar-collapse -->
@@ -46,163 +46,35 @@
 
       <div class="container">
       <div class="row">
-        
+        <!--place for drink image and start message -->
         <div class="col-sm-4">
         <p id="press">Press any key to get started!</p>
-        <!-- <h3></h3> -->
-       <!--  <h4 id="display-area"></h4> -->
          <img src="assets/images/martiniStart.png" class="img-responsive" id="theDrink" alt="Hangman drink image">
          <p id="over"></p>
         </div>
 
       <div class="col-sm-5">
-        <!-- <h4 id="playing-area"></h4> -->
          <!--  display guesses, wins and losses, dashes -->
     
             <div id = display></div>
             <span id="displayDashes"></span>
               <!-- <p id="userChoice"></p> -->
-              <p id="letterGuess">Letters Guessed:</p>
+              <p><h5>Letters Guessed:</h5><span id="letterGuess"></span></p>
               <p>Wins: <span id="win">0</span></p>
               <p>Losses: <span id="loss">0</span></p>
               <p>Guesses Remaining<span id="guessesRemaining"></span></p>
               <p id="comment"></p>
+              <!-- <p id="again"></p> -->
+              <button onclick="newGame()">Play again</button>
+
          
         </div>
       </div>
     </div>
 </div>
 
-<!--           <p id="changeLetters">
- --><script>
 
-      var names = ['bijou', 'bellini', 'negroni', 'sidecar', 'martini', 'aviation', 'daiquiri', 'dubonnet', 'manhattan', 'sazerac', 'southside', 'vesper']; 
-      var choices = Math.floor(Math.random() * names.length);
-      var drink = names[choices];
-      var letters = Array.from(drink);
-      var displayWord = [];
-      var letterGuess = [];
-      var inWord = [];
-      var spacedWord = "";
-      var imageGlass = ['martini0.png', 'martini1.png', 'martini2.png', 'martini3.png', 'martini4.png', 'martini5.png', 'martini6.png', 'martini7.png', 'martini8.png', 'martini9.png'];
-      glassCounter = -1;
-      var win = 0;
-      var loss = 0;
-      var guessesRemaining = 15;
-      var userInput;
-      var alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-      var keepPlaying = true;
-
-    //Start game
-
-    document.onkeypress=function(e){
-    document.getElementById('press').innerHTML = '';
-    }
-      
-      for(var i = 0; i < letters.length; i++) {
-        displayWord[i] = "_";
-      }
-
-      var display = function(addSpace) { 
-        var str = "";
-        
-        for(var i = 0; i < letters.length; i++) {
-          str += addSpace[i] + " "; 
-        } 
-
-        return str.trim();
-      }
-
-      document.onkeyup = function(event){ //OPEN 
-
-        if(!keepPlaying) { 
-          guessesRemaining = 0;
-          letterGuess = 0;
-          return;
-        }
-
-        // (function() {
-        //   var restart = arguments.callee; 
-        //     if( guessesRemaining === 0) {
-        //       setTimeout(restart,1) 
-        //     }
-        //     else {
-
-        var userInput = String.fromCharCode(event.keyCode).toLowerCase();
-       
-        document.getElementById('guessesRemaining').innerHTML = ': ' + guessesRemaining;
-     
-         var processUserChoice = function(guess) {
-            for(var i = 0; i < letters.length; i++) {
-                var inWord = letters.indexOf(userInput) != -1;
-              console.log('this is the inWord ' + inWord);
-            }
-            userInput = guess.toUpperCase();
-              var alreadyGuessed = letterGuess.indexOf(userInput) != -1;
-              // console.log('this is the inWord ' + inWord);
-
-             if (/[a-zA-Z]/.test(userInput) && !alreadyGuessed) {
-                letterGuess.push(String.fromCharCode(event.keyCode).toUpperCase());
-                  guessesRemaining--;
-              }
-              else if (alreadyGuessed) {
-                // document.getElementById('comment').innerHTML = 'You guessed this already';
-                // document.getElementById('comment').innerHTML = ' ';
-
-              }
-              else {
-                // document.getElementById('comment').innerHTML = 'That wasn\'t a letter: try again.';
-                
-              }
-              // console.log('these are the letters: ' + letters);
-              // console.log('this is the inWord' + inword);
-
-              if (/[a-zA-Z]/.test(userInput) && !alreadyGuessed && !inWord) {
-                console.log('martini' + (glassCounter++));
-              document.getElementById("theDrink").src = "assets/images/martini" +glassCounter + ".png";
-              }
-              
-              for(var i = 0; i < letters.length; i++) {
-                if (guess === letters[i]) {
-                  displayWord[i] = guess;
-                //Checking to make sure this is working
-                  // console.log("Word: " + displayWord); 
-                  // console.log('this is the guess then the letters[i] ' + guess + " " + letters[i]);
-                  // guessesRemaining--;
-                }
-              }
-          }
-
-          processUserChoice(userInput);
-          document.querySelector("#display").innerHTML = display(displayWord);
-          console.log('this is the letter guess array' + letterGuess);
-        
-          document.getElementById('letterGuess').innerHTML = 'Letters Guessed: ' + letterGuess.join(" ");
-
-          if (glassCounter === 9 || guessesRemaining === 0 && displayWord != newLetters) {
-            document.getElementById("theDrink").src = "assets/images/martini9.png";
-            document.getElementById('guessesRemaining').innerHTML = ': 0';
-            loss++;
-            document.getElementById('over').innerHTML = 'You lost but at least you got a martini!';
-            document.getElementById('loss').innerHTML = loss;
-            keepPlaying = false;
-          }
-
-          var newLetters = letters.join(",", letters);
-                
-            if (displayWord == newLetters) {
-              document.getElementById("theDrink").src = "assets/images/" + drink + ".png"
-              document.getElementById('guessesRemaining').innerHTML = ': 0';
-              win++;
-              document.getElementById('win').innerHTML = win;
-              document.getElementById('over').innerHTML = 'Cheers! Well done!';
-              keepPlaying = false;
-            } 
-          
-
-           
-}
-
+<script>
 
 </script>
 
