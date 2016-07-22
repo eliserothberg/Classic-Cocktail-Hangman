@@ -20,6 +20,7 @@
 
     function newGame() {
 
+      displayWord = [];
       names = ['bijou', 'bellini', 'negroni', 'sidecar', 'martini', 'aviation', 'daiquiri', 'dubonnet', 'manhattan', 'sazerac', 'southside', 'vesper'];
 
       //randomized word chosen from name list, split into an array
@@ -97,33 +98,43 @@
         
           document.getElementById('letterGuess').innerHTML = ' ' + letterGuess.join(" ");
 
-          var newLetters = letters.join(",", letters);
+          var newLetters = letters.join(",");
 
           if (/[a-zA-Z]/.test(userInput) && !alreadyGuessed && !inWord) {
                 glassCounter++;
                 document.getElementById("theDrink").src = "assets/images/martini" + glassCounter + ".png";
                 keepPlaying = true;
           }
+          //   else if (alreadyGuessed) {
+          //       document.getElementById('comment').innerHTML = 'You guessed this already';
+          //       // document.getElementById('comment').innerHTML = ' ';
+
+          // }
+          //   else {
+          //       document.getElementById('comment').innerHTML = 'That wasn\'t a letter: try again.';
+          //   }
+
+            // document.getElementById('comment').innerHTML = '';
 
           if (glassCounter < 9 && displayWord == newLetters && guessesRemaining > 0) {
             document.getElementById("theDrink").src = "assets/images/" + drink + ".png"
             document.getElementById('guessesRemaining').innerHTML = ': 0';
+            document.getElementById('over').innerHTML = 'Cheers! Well done!';
             win++;
             document.getElementById('win').innerHTML = win;
-            document.getElementById('over').innerHTML = 'Cheers! Well done!';
             keepPlaying = false;
           } 
 
           if (glassCounter === 9 || guessesRemaining === 0 && displayWord != newLetters) {
             document.getElementById("theDrink").src = "assets/images/martini9.png";
             document.getElementById('guessesRemaining').innerHTML = ': 0';
-            loss++;
             document.getElementById('over').innerHTML = 'You lost but at least you got a martini!';
+            loss++;
             document.getElementById('loss').innerHTML = loss;
             keepPlaying = false;
           }
-
         }
+        
         
 
         processUserChoice(userInput);
